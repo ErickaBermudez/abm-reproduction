@@ -12,7 +12,6 @@ globals [
   ;; globals that can be modified only in code.
   lifespan ; average turtle lifespan (global average)
   maturity_age ; when do turtles can reproduce
-  avg-children-per-turtle ;; average birthrate
   births-per-year ; how many births are in one tick in women
 ]
 
@@ -40,9 +39,8 @@ to setup
 end
 
 to setup-globals
-  set lifespan 80
+  set lifespan 60
   set maturity_age 18
-  set avg-children-per-turtle 0
   set cost_of_living avg-cost-of-living
   set cost_of_child avg-cost-of-child
   set avg_annual_income median-annual-income
@@ -124,10 +122,6 @@ to go
   set cost_of_child (cost_of_child + (cost_of_child * inflation))
   ;; for turtles that are just born
   set avg_annual_income (avg_annual_income + (avg_annual_income * income_increase))
-  show "avg income"
-  show avg_annual_income
-  show "avg cost"
-  show cost_of_living + cost_of_child
 
   ;;show "cost"
   ;;show cost_of_living
@@ -190,17 +184,15 @@ to check-reproduce
 
   ifelse partner-children > children [ set total-children partner-children ] [ set total-children children ]
 
-  ;; if they have enough money
-
-
   ifelse annual_earnings + partner-earnings > (cost_of_child * (total-children + 1)) + cost_of_living [
       try-new-turtle
 
   ]
   ;; if they don't have enough money, it's around 16% chance they still decide to reproduce
+  ;; but not if they dont have money at all
   ;; based on research of children living under poverty conditions
   [
-    if  random-float 1 < .16  [
+    if  random-float 1 < .16   [
      try-new-turtle
     ]
 
@@ -209,7 +201,15 @@ to check-reproduce
 end
 
 to try-new-turtle
-  let conceiving-rate .01;
+  let conceiving-rate .001;
+
+  ;; per research, most people want around 2-3 children
+  let  wish_baby? true
+  if [ children ] of partner > ideal-children-quantity or children > ideal-children-quantity [ set wish_baby? false ]
+
+
+  ;; there is a chance this person just does not want to have children at all
+  if random-float 1 < %_no_children [ set wish_baby? false ]
 
   ;; the rate that if they try to reproduce they will succeed
   if age < 51 [ set conceiving-rate .05 ]
@@ -218,7 +218,7 @@ to try-new-turtle
   if age < 31 [ set conceiving-rate .78 ]
   if age < 26 [ set conceiving-rate .86 ]
 
-  if random-float 1 < conceiving-rate [
+  if random-float 1 < conceiving-rate and wish_baby? = true [
     set children children + 1
     ask partner [ set children children + 1 ]
     set-new-turtle
@@ -306,7 +306,7 @@ avg-cost-of-living
 avg-cost-of-living
 1
 100
-39.0
+48.0
 1
 1
 K USD 
@@ -321,7 +321,7 @@ avg-cost-of-child
 avg-cost-of-child
 1
 100
-14.0
+16.0
 1
 1
 K USD
@@ -336,37 +336,37 @@ median-annual-income
 median-annual-income
 1
 200
-55.0
+58.0
 1
 1
 K USD
 HORIZONTAL
 
 SLIDER
-864
-315
-1042
-348
+859
+458
+1037
+491
 yearly-income-increase
 yearly-income-increase
 -1
 1
-0.02
+0.04
 .01
 1
 NIL
 HORIZONTAL
 
 SLIDER
-867
-359
-1039
-392
+862
+502
+1034
+535
 yearly-inflation
 yearly-inflation
 -1
 1
-0.03
+0.04
 .01
 1
 NIL
@@ -468,7 +468,7 @@ births-per-year
 BUTTON
 403
 503
-552
+838
 536
 Add 50 young people
 add-young
@@ -493,14 +493,91 @@ Initial settings. Only for setup.
 1
 
 TEXTBOX
-868
-294
-1115
-322
+863
+437
+1110
+465
 These settings will be updated if changed.
 11
 0.0
 1
+
+PLOT
+1105
+46
+1454
+196
+Birthrate per year
+ticks
+birthrate
+0.0
+10.0
+0.0
+3.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot births-per-year"
+
+PLOT
+1106
+216
+1457
+366
+Annual Income and Costs 
+Ticks
+Money
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Annual income" 1.0 0 -5825686 true "" "plot avg_annual_income"
+"Costs" 1.0 0 -13345367 true "" "plot cost_of_living + cost_of_child"
+
+TEXTBOX
+1112
+378
+1262
+406
+Blue = costs\nPink = avg. income
+11
+0.0
+1
+
+SLIDER
+866
+290
+1039
+323
+ideal-children-quantity
+ideal-children-quantity
+0
+10
+3.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+867
+333
+1039
+366
+%_no_children
+%_no_children
+0
+1
+0.2
+.1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
