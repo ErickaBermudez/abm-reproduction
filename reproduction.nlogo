@@ -146,7 +146,7 @@ end
 to kill-turtle
   set pcolor black
   if coupled? [
-    set pcolor black
+    ask (patch-at 1 0) [ set pcolor black ] ; making sure to change color of the patch, even if the current turtle is not sex 0
     ask (patch-at -1 0) [ set pcolor black ]
     ask partner [set coupled? false ]
     ask partner [ set partner nobody ]
@@ -155,6 +155,7 @@ to kill-turtle
 end
 
 to couple
+  ; a suitable partner must be the opposite sex, not coupled and appropiate age
   let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1 and age > maturity_age]
 
   ; if found suitable partner

@@ -105,14 +105,14 @@ to go
   ]
 
   ask turtles [
-    if not coupled? and sex = 0 and age > maturity_age [ couple ]
+    if not coupled? and sex = 0  [ couple ]
   ]
 
   ask turtles [
     if coupled? and sex = 0 [ check-reproduce ]
   ]
 
-  let w_c count turtles with [sex = 0 and age > maturity_age ]
+  let w_c count turtles with [sex = 0]
   let chidr_c sum [ children ] of turtles  with [sex = 0 and age > maturity_age]
 
   ifelse w_c > 0  [ set births-per-year (chidr_c / w_c) ] [ set births-per-year 0 ]
@@ -146,7 +146,7 @@ end
 to kill-turtle
   set pcolor black
   if coupled? [
-    set pcolor black
+    ask (patch-at 1 0) [ set pcolor black ] ; making sure to change color of the patch, even if the current turtle is not sex 0
     ask (patch-at -1 0) [ set pcolor black ]
     ask partner [set coupled? false ]
     ask partner [ set partner nobody ]
@@ -155,7 +155,8 @@ to kill-turtle
 end
 
 to couple
-  let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1 and age > maturity_age]
+  ; a suitable partner must be the opposite sex, not coupled and appropiate age
+  let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1]
 
   ; if found suitable partner
   if potential-partner != nobody [
@@ -203,8 +204,6 @@ end
 
 to try-new-turtle
   let conceiving-rate .01;
-
-
 
   ;; the rate that if they try to reproduce they will succeed
   if age < 51 [ set conceiving-rate .05 ]
