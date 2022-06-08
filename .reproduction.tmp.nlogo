@@ -105,14 +105,14 @@ to go
   ]
 
   ask turtles [
-    if not coupled? and sex = 0  [ couple ]
+    if not coupled? and sex = 0 and age > maturity_age [ couple ]
   ]
 
   ask turtles [
     if coupled? and sex = 0 [ check-reproduce ]
   ]
 
-  let w_c count turtles with [sex = 0]
+  let w_c count turtles with [sex = 0 and age > maturity_age ]
   let chidr_c sum [ children ] of turtles  with [sex = 0 and age > maturity_age]
 
   ifelse w_c > 0  [ set births-per-year (chidr_c / w_c) ] [ set births-per-year 0 ]
@@ -156,7 +156,7 @@ end
 
 to couple
   ; a suitable partner must be the opposite sex, not coupled and appropiate age
-  let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1]
+  let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1 and age > maturity_age]
 
   ; if found suitable partner
   if potential-partner != nobody [
@@ -183,8 +183,6 @@ to check-reproduce
   let total-children 0;
 
   ifelse partner-children > children [ set total-children partner-children ] [ set total-children children ]
-
-  ;; if they have enough money
 
 
   ifelse annual_earnings + partner-earnings > (cost_of_child * (total-children + 1)) + cost_of_living [
