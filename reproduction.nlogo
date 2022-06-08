@@ -94,7 +94,9 @@ end
 
 to go
 
-  if count turtles with [ sex = 0 ] < 2 [ stop ]
+  if count turtles with [ sex = 0 ] < 1 [ stop ] ; if there is no girl then we stop the program
+
+  ; check-sliders ; if the user changed input in the interface we adjust
 
   ask turtles [ set age age + 1] ; get one year older
   ask turtles [ if age > lifespan [ kill-turtle ] ] ; if over lifespan die
@@ -234,6 +236,22 @@ to set-new-turtle
     assign-color
   ]
 end
+
+to add-young
+  create-turtles 50 [
+    setxy random-xcor random-ycor
+    set shape "person"
+    assign-earnings
+    set age random-near 25
+    ifelse random 2 = 0
+    [ set sex 0 ]
+    [ set sex 1 ]
+    set coupled? false
+    set partner nobody
+    set children 0
+    assign-color
+  ]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 399
@@ -346,7 +364,7 @@ initial-people
 initial-people
 1
 500
-169.0
+500.0
 1
 1
 NIL
@@ -413,7 +431,7 @@ initial-average-age
 initial-average-age
 1
 90
-35.0
+38.0
 1
 1
 NIL
@@ -429,6 +447,23 @@ births-per-year
 2
 1
 11
+
+BUTTON
+1097
+38
+1246
+71
+Add 50 young people
+add-young
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
