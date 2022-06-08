@@ -120,10 +120,14 @@ to go
   ifelse w_c > 0  [ set births-per-year (chidr_c / w_c) ] [ set births-per-year 0 ]
 
   ;; now we will update some values
-  ;set cost_of_living (cost_of_living + (cost_of_living * inflation))
+  set cost_of_living (cost_of_living + (cost_of_living * inflation))
   set cost_of_child (cost_of_child + (cost_of_child * inflation))
   ;; for turtles that are just born
   set avg_annual_income (avg_annual_income + (avg_annual_income * income_increase))
+  show "avg income"
+  show avg_annual_income
+  show "avg cost"
+  show cost_of_living + cost_of_child
 
   ;;show "cost"
   ;;show cost_of_living
@@ -254,20 +258,6 @@ to add-young
 end
 
 to check-sliders
-  if (avg-cost-of-living != cost_of_living)
-    [
-      set cost_of_living avg-cost-of-living
-    ]
-
-  if (cost_of_child != avg-cost-of-child)
-    [
-      set cost_of_child avg-cost-of-child
-    ]
-
-  if (avg_annual_income != median-annual-income)
-    [
-      set avg_annual_income median-annual-income
-    ]
 
   if (income_increase != yearly-income-increase)
     [
@@ -308,25 +298,25 @@ ticks
 30.0
 
 SLIDER
-857
-39
-1044
-72
+861
+69
+1048
+102
 avg-cost-of-living
 avg-cost-of-living
 1
 100
-38.0
+39.0
 1
 1
 K USD 
 HORIZONTAL
 
 SLIDER
-858
-84
-1048
-117
+862
+114
+1052
+147
 avg-cost-of-child
 avg-cost-of-child
 1
@@ -338,55 +328,55 @@ K USD
 HORIZONTAL
 
 SLIDER
-859
-130
-1069
-163
+863
+158
+1081
+191
 median-annual-income
 median-annual-income
 1
 200
-60.0
+55.0
 1
 1
 K USD
 HORIZONTAL
 
 SLIDER
-859
-179
-1037
-212
+864
+315
+1042
+348
 yearly-income-increase
 yearly-income-increase
-0
+-1
 1
-0.02
+0.4
 .01
 1
 NIL
 HORIZONTAL
 
 SLIDER
-862
-223
-1034
-256
+867
+359
+1039
+392
 yearly-inflation
 yearly-inflation
 0
 1
-0.04
+0.12
 .01
 1
 NIL
 HORIZONTAL
 
 SLIDER
-861
-269
-1033
-302
+864
+203
+1036
+236
 initial-people
 initial-people
 1
@@ -450,10 +440,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot count turtles"
 
 SLIDER
-862
-310
-1034
-343
+865
+244
+1037
+277
 initial-average-age
 initial-average-age
 1
@@ -465,10 +455,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-875
-377
-937
-422
+10
+498
+384
+543
 Birthrate
 births-per-year
 2
@@ -476,10 +466,10 @@ births-per-year
 11
 
 BUTTON
-1097
-38
-1246
-71
+403
+503
+552
+536
 Add 50 young people
 add-young
 NIL
@@ -490,6 +480,26 @@ NIL
 NIL
 NIL
 NIL
+1
+
+TEXTBOX
+864
+45
+1014
+63
+Initial settings. Only for setup.
+11
+0.0
+1
+
+TEXTBOX
+868
+294
+1115
+322
+These settings will be updated if changed.
+11
+0.0
 1
 
 @#$#@#$#@
