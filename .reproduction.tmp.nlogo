@@ -204,6 +204,8 @@ end
 to try-new-turtle
   let conceiving-rate .01;
 
+
+
   ;; the rate that if they try to reproduce they will succeed
   if age < 51 [ set conceiving-rate .05 ]
   if age < 41 [ set conceiving-rate .52 ]
