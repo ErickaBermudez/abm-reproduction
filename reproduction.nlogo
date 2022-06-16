@@ -113,6 +113,7 @@ to go
     if coupled? and sex = 0 [ check-reproduce ]
   ]
 
+  ;; setting the TFR
   let w_c count turtles with [sex = 0 and age > maturity_age ]
   let chidr_c sum [ children ] of turtles  with [sex = 0 and age > maturity_age]
 
@@ -124,13 +125,6 @@ to go
   ;; for turtles that are just born
   set avg_annual_income (avg_annual_income + (avg_annual_income * income_increase))
 
-  ;;show "cost"
-  ;;show cost_of_living
-  ;;show "cost of child"
-  ;;show cost_of_child
-  ;;show "avg income"
-  ;;show avg_annual_income
-
   ask turtles [
     set annual_earnings (annual_earnings + (annual_earnings * income_increase))
   ]
@@ -139,11 +133,12 @@ to go
 
 end
 
-to move  ;; turtle procedure
+to move  ;; turtle move in random direction
   rt random-float 360
   fd 1
 end
 
+;; procedure to kill a turtle
 to kill-turtle
   set pcolor black
   if coupled? [
@@ -155,6 +150,7 @@ to kill-turtle
   die
 end
 
+;; procedure to get two turtles together
 to couple
   ; a suitable partner must be the opposite sex, not coupled and appropiate age
   let potential-partner one-of (turtles-at -1 0) with [not coupled? and sex = 1 and age > maturity_age]
@@ -177,6 +173,7 @@ to reproduce
 
 end
 
+;; procedure to decide either to try reproduction
 to check-reproduce
   let partner-earnings [ annual_earnings ] of partner
   let partner-children [ children ] of partner
@@ -200,6 +197,7 @@ to check-reproduce
 
 end
 
+;; procedure to decide if reproduction will be succesfull
 to try-new-turtle
   let conceiving-rate .001;
 
@@ -212,6 +210,9 @@ to try-new-turtle
   if random-float 1 < %_no_children [ set wish_baby? false ]
 
   ;; the rate that if they try to reproduce they will succeed
+  ;; based on real-life conceiving rate per year, it might change based on country
+  ;; and available methods
+  ;; base: TIMESOFINDIA.COM
   if age < 51 [ set conceiving-rate .05 ]
   if age < 41 [ set conceiving-rate .52 ]
   if age < 36 [ set conceiving-rate .63 ]
@@ -225,6 +226,7 @@ to try-new-turtle
   ]
 end
 
+;; procedure to insert a new turtle into the community
 to set-new-turtle
   hatch 1 [
     setxy random-xcor random-ycor
@@ -241,6 +243,7 @@ to set-new-turtle
   ]
 end
 
+;; procedure to inject young people in the population
 to add-young
   create-turtles 50 [
     setxy random-xcor random-ycor
@@ -257,6 +260,7 @@ to add-young
   ]
 end
 
+;; procedure to update the variables if they change int he interface
 to check-sliders
 
   if (income_increase != yearly-income-increase)
@@ -582,39 +586,60 @@ HORIZONTAL
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This model simulates the reproduction of humans living in developed countries based on financial factors such as their earnings versus the cost of living. It therefore illlustrates the effect of changing these variables in population increase or decrease. 
+
+In developed countries there is a rising concern about the decline in fertility rates. Total Fertility Rate (TFR), and thus the birth rate, is one of the most important measures in demography, as its relevance affects government policies and the general well-being of the population. One of the reasons for this concern is the replacement level of fertility, The birth rate in most of the countries in the developed world is no longer sufficient to maintain the current population. 
+
+Financial insecurity has been addressed as a factor contributing to the declining birth rates by several research, including increased unemployment, financial losses and economic uncertainty. 
+
+This model examines the effects of financial variables on reproduction. The user controls some variables that relate to personal choices and current financial conditions in the community.
+
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+Individual turtles wander around the world until they find around a suitable partner. The model uses "couples" to represent two people in a relationship. These couples every year take a decision on whether to reproduce or not, based on their combined earnings and determined by the age of one of them (for conceiving rate). 
+
+If they reproduce, a new turtle aged 0 will be hatched, and the process will continue. 
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+The SETUP button creates individuals based on the values the interface's buttons. After the setup, pressing the GO button will start the simulation. During the simulation you can adjust the values under the label "These settings will be updated if changed.", to see how they would impact in real time. 
+
+A monitor shows the TFR of the population, and a graph is used to observe how the costs and income behave over time. Another graph is used to show how TFR changes over time. 
+
+Here is the detail of what sliders do. 
+
+- AVG-COST-OF-LIVING: Average cost of living in certain community per year
+- AVG-COST-OF-CHILD: Average cost of child per year 
+- MEDIAN-ANNUAL-INCOME: Median annual income of one turtle per year
+- INITIAL-PEOPLE: How many people the simulation begins with. Take in consideration density of community or sparse time to find partners. 
+- INITIAL-AVERAGE-AGE: The initial average age of the population, turtles will have a normal distribution. Note that because of this setting every experiment will have at first a high rise on births, but it will regulate after that. 
+- IDEAL-CHILDREN-QUANTITY: Limits the children per woman. Even if women can afford as many children as they want, there is a limit. This can be based on personal preference, housing situation, the career path that allows them to have a high income, etc.
+- %NO-CHILDREN: Percentage of women that decide not to have children, nonetheless of their situation.
+
+The button "add 50 young people" helps to simulate migration. When clicked at any time, it will add 50 turtles close to 25 years old.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
+Please refer to the document of this model to a more detail analysis of things to notice about the model. 
 
 ## THINGS TO TRY
 
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+Try different initial settings similar to your community and see if it behaves as expected. Also, you can try different initial population and average age, to see if population can be saved alone by increasing salaries or needs a migration boost. 
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+Like all similations, this model has simplified the behaviour of real life. Especially, it does not address for the ideal children quantity in a substancial way. Maybe an extension would be to address for house space or career path, as these two variables are regularly appointed on research as a reason couples decide not to have children.
 
-## NETLOGO FEATURES
-
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+Moreover, the model assumes that a "suitable partner" is anyone within adequate age range and opposite sex. This is not the case in real life, and an extension might take this into account. 
 
 ## RELATED MODELS
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
+Some of the features come from NetLogo library model "HIV". Thank to the authors. 
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+Wilensky, U. (1997). NetLogo HIV model. http://ccl.northwestern.edu/netlogo/models/HIV. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
 @#$#@#$#@
 default
 true
