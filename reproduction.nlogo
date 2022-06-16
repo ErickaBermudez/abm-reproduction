@@ -16,7 +16,7 @@ globals [
 ]
 
 turtles-own [
-  coupled? ;; If true, the turtle already has a couple.
+  coupled? ; If true, the turtle already has a couple.
   ;; the couple will stay together until they die.
   partner ; The turtle that is their partner
   age ; age of the turtle
@@ -98,6 +98,7 @@ to go
 
   ask turtles [ set age age + 1] ; get one year older
   ask turtles [ if age > lifespan [ kill-turtle ] ] ; if over lifespan die
+
 
   ; move while not coupled
   ask turtles [
@@ -189,7 +190,6 @@ to check-reproduce
 
   ]
   ;; if they don't have enough money, it's around 16% chance they still decide to reproduce
-  ;; but not if they dont have money at all
   ;; based on research of children living under poverty conditions
   [
     if  random-float 1 < .16   [
@@ -306,7 +306,7 @@ avg-cost-of-living
 avg-cost-of-living
 1
 100
-48.0
+44.0
 1
 1
 K USD 
@@ -336,7 +336,7 @@ median-annual-income
 median-annual-income
 1
 200
-58.0
+66.0
 1
 1
 K USD
@@ -380,8 +380,8 @@ SLIDER
 initial-people
 initial-people
 1
-500
-500.0
+1000
+1000.0
 1
 1
 NIL
@@ -459,7 +459,7 @@ MONITOR
 498
 384
 543
-Birthrate
+TFR
 births-per-year
 2
 1
@@ -507,9 +507,9 @@ PLOT
 46
 1454
 196
-Birthrate per year
+TFR per year
 ticks
-birthrate
+TFR
 0.0
 10.0
 0.0
@@ -573,7 +573,7 @@ SLIDER
 %_no_children
 0
 1
-0.2
+0.3
 .1
 1
 NIL
@@ -925,6 +925,274 @@ NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="1"/>
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="48"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="58"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" sequentialRunOrder="false" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="300"/>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="48"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="125"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.02"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="53"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="12"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.01"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="30"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="japan" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.02"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="53"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="12"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.01"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="49"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="us" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="500"/>
+    <exitCondition>count turtles &gt; 2000</exitCondition>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="66"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="504"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.02"/>
+      <value value="0.03"/>
+      <value value="0.04"/>
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="no" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="66"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="504"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="yes" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="66"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="504"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="people" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="1000"/>
+    <exitCondition>count turtles &gt; 3000</exitCondition>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="ideal-children-quantity">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-inflation">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-living">
+      <value value="44"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="%_no_children">
+      <value value="0.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="median-annual-income">
+      <value value="66"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="avg-cost-of-child">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-people">
+      <value value="500"/>
+      <value value="1000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="yearly-income-increase">
+      <value value="0.04"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-average-age">
+      <value value="38"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
